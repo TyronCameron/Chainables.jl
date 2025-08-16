@@ -2,9 +2,9 @@
 
 # Chainables.jl
 
-Flip those function calls upside down so that `@chain` (from [Chain.jl](https://github.com/jkrumbiegel/Chain.jl)) is nice! 
+Flip those function calls upside down so that `@chain` (from [Chain.jl](https://github.com/jkrumbiegel/Chain.jl)) is even nicer! 
 
-This is a package for true `@chain` connoisseurs. Continue that `@chain` without feeling peer-pressured by those pesking reverse-argument functions.
+This is a package for true `@chain` connoisseurs. Continue that `@chain` without feeling peer-pressured by those pesky reverse-argument functions.
 
 ```julia 
 foo(a,b,c) = a + b + c

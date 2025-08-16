@@ -1,12 +1,12 @@
 using Documenter
-using Taproots
+using Chainables
 
 push!(LOAD_PATH,"../src/")
 
 makedocs(
-    sitename = "Taproots",
+    sitename = "Chainables",
     format = Documenter.HTML(),
-    modules = [Taproots],
+    modules = [Chainables],
     pages = [
         "Index" => "index.md",
         "API" => "api.md"
@@ -14,6 +14,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/TyronCameron/Taproots.jl.git",
+    repo = "github.com/TyronCameron/Chainables.jl.git",
     devbranch = "main"
 )
