@@ -1,14 +1,16 @@
-# using Taproots, Test
+using Chainables, Test, Aqua
+
+Aqua.test_all(Chainables)
 
 ###########################################################################
 # Run tests
 ###########################################################################
 
-# include(joinpath(@__DIR__, "taproot.jl"))
-# include(joinpath(@__DIR__, "traversal.jl"))
-# include(joinpath(@__DIR__, "children.jl"))
-# include(joinpath(@__DIR__, "flags.jl"))
-# include(joinpath(@__DIR__, "indexing.jl"))
-# include(joinpath(@__DIR__, "adjacency.jl"))
-# include(joinpath(@__DIR__, "modification.jl"))
+include(joinpath(@__DIR__, "apply.jl"))
+include(joinpath(@__DIR__, "pack.jl"))
+include(joinpath(@__DIR__, "functionals.jl"))
+include(joinpath(@__DIR__, "convert.jl"))
+include(joinpath(@__DIR__, "unzip.jl"))
+include(joinpath(@__DIR__, "vec.jl"))
+include(joinpath(@__DIR__, "partial.jl"))
 

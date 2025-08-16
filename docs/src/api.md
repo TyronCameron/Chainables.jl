@@ -1,19 +1,19 @@
-# Taproots API
+# Chainables API
 
 ```@docs
-Taproots
+Chainables
 ```
 
 ## Module Index
 
 ```@index
-Modules = [Taproots]
+Modules = [Chainables]
 Order   = [:constant, :type, :function, :macro]
 ```
 
 ## API
 
 ```@autodocs
-Modules = [Taproots]
+Modules = [Chainables]
 Order   = [:constant, :type, :function, :macro]
 ```

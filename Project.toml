@@ -1,0 +1,11 @@
+name = "Chainables"
+uuid = "e6b49e76-7649-4be4-a64f-e8c00c6006ac"
+authors = ["Tyron Cameron <tyron.luke.cameron@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Chain = "8be319e6-bccf-4806-a6f7-6fae938471bc"
+
+[compat]
+julia = "1.11"
+Chain = "1.0.0"
