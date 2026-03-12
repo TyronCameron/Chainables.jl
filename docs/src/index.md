@@ -9,8 +9,8 @@ You can install this package by pressing `]` in the Julia REPL and writing `add 
 This package reexports `@chain` and provides:
 
 - A slightly more pleasant way to write anonymous functions (lambdas) during chaining. It does this mainly with `@apply`, `with`. 
-- Packing and unpacking of arguments, namely with `@pack`, `@unpack`. The latter simply packs varargs into a tuple, and the latter unpacks a tuple into varargs in a function definition. Useful if you want to splat a tuple into a chained function. 
-- Reverse-argument macro-versions of common iterator functions. While the base Julia versions accept a function as the first argument, these accept the iterator as the first argument, allowing simpler chaining. `@filteriter`, `@map`, `@filter`, `@reduce`, `@foldl`, `@foldr`, `@accumulate`. It also provides a macro `@rev` to reverse your own functions and macros on-the-fly.
+- Packing and unpacking of arguments, namely with `@pack`, `@unpack`. The latter simply packs varargs into a tuple, and the latter unpacks a tuple into varargs in a function definition. Useful if you want to splat a tuple into a chained function. This is similar to `tuple` and `splat` in Base. 
+- Reverse-argument macro-versions of common iterator functions. While the base Julia versions accept a function as the first argument, these macro versions accept the iterator as the first argument, allowing simpler chaining. `@filteriter`, `@map`, `@filter`, `@reduce`, `@foldl`, `@foldr`, `@accumulate`. It also provides a macro `@rev` to reverse your own functions and macros on-the-fly.
 - Reverse-argument aggregation functions, such as `@count`, `@sum`, `@prod`, `@minimum`, `@maximum`, `@any`, `@all`, `@extrema`, `@argmin`, `@argmax`, `@findfirst`, `@findlast`
 - Reverse-argument conversions and parsing, just in case you needed them: `@convert`, `@parse`,
 - A handy `unzip` tool, allowing you to create a lazy iterator over a zipped iterator! Useful if you wanted to zip, do some transformations, and get back the unzipped iterators. 
@@ -19,7 +19,7 @@ This package reexports `@chain` and provides:
 
 ## Anonymous function chaining
 
-Old way: 
+Current way: 
 
 ```julia
 @chain 5 begin	
@@ -27,7 +27,7 @@ Old way:
 end 
 ```
 
-New way: 
+Chainables way: 
 
 ```julia
 using Chainables
@@ -67,6 +67,14 @@ With this package, you can instead write:
     @filter @unpack (a, b) -> b <= 25
 	@map @unpack (a, b) -> a
 end
+
+# or if you don't like collecting ...
+# can use Iterators.filter instead
+@chain 1:10 begin
+    zip(21:30)
+    @filteriter @unpack (a, b) -> b <= 25
+	@map @unpack (a, b) -> a
+end
 ```
  
 ## Reverse-argument macros
@@ -74,18 +82,22 @@ end
 You can reverse any function or macro like this: 
 
 ```julia
+# Add em all up
 @chain 1:100 begin
 	@rev reduce(+)
 end 
 
+# Still works with assignment 
 @chain 1:100 begin
 	tempval = @rev reduce(+)
 end 
 
+# Can use @rev @info to stick headings up on your debugs
 @chain 1:100 begin
 	@rev @info "abc"
 end 
 
+# Create a tuple on the fly. @rev to make "abc" come first. 
 @chain 1:100 begin
 	tempval = @rev @pack "abc"
 end 
@@ -93,7 +105,7 @@ end
 
 But I did it in a very nice way for the common ones already. 
 
-Old way:
+Current way:
 
 ```julia
 @chain 1:100 begin
@@ -103,7 +115,7 @@ Old way:
 end 
 ```
 
-New way:
+Chainables way:
 
 ```julia
 @chain 1:100 begin
@@ -113,7 +125,7 @@ New way:
 end 
 ```
 
-Naturally this comes with all the bells and whistles, such as kwargs. For example, let's say we wanted to figure out the maximum strength of each level, when not ceding, in the Hierarchy in the book "The Will of the Many". We might wish for an initialising variable. 
+Naturally this comes with all the bells and whistles, such as kwargs. For example, let's say we just read "The Will of the Many" by James Islington, and we wanted to figure out the maximum strength of each level, when not ceding, in each level of the Hierarchy. We might wish for an initialising variable, which we can pass first. 
 
 ```julia
 @chain 8:-1:1 begin
@@ -202,3 +214,20 @@ foo_Partial(1)(2)(3)() # the last empty value returns a value
 ```
 
 This `Partial` type causes more overhead than using the plain functions. However, it provides additional convenience for repeated calls, printing, and arg checking before you actually call the function. 
+
+## Unzip
+
+As a tiny sidequest, this package comes with `unzip`, which is done slightly better than the splatting method. 
+I find myself refiguring out how to unzip when I'm chaining iterators together. 
+
+```julia
+a = @chain 1:100 begin	
+	zip(101:200)
+	unzip
+	first 
+	collect
+end 
+
+@assert all(a .== 1:100)
+```
+
