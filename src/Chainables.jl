@@ -5,6 +5,7 @@ module Chainables
 import Chain: @chain
 export 
     @chain, 
+    @chainable,
     apply, @apply, with, rev, @rev,
     pack, @pack, unpack, @unpack,
     @filteriter, @map, @filter, @reduce, @foldl, @foldr, @accumulate, 
@@ -21,11 +22,11 @@ export
 # Utilities for this module
 # ----------------------------------------------------------------
 
-macro create_reverse_macro(function_name)
+macro chainable(function_name)
     quote 
         macro $function_name(args...)
             f = $function_name
-            posargs, kwargs = get_posargs_kwargs(args)
+            posargs, kwargs = $get_posargs_kwargs(args)
             a = posargs[1]
             b = posargs[end]
             Expr(:call, f, b, a, kwargs...) |> esc
@@ -113,7 +114,7 @@ end
 @assert x == 'F'
 ```
 """
-@create_reverse_macro apply
+@chainable apply
 
 """
     with(f::Function, args...; kwargs...)
@@ -215,29 +216,29 @@ macro filteriter(x, f)
     esc( :(Iterators.filter($f, $x)) )
 end 
 
-@create_reverse_macro map
-@create_reverse_macro filter
-@create_reverse_macro reduce
-@create_reverse_macro foldl
-@create_reverse_macro foldr
-@create_reverse_macro accumulate
+@chainable map
+@chainable filter
+@chainable reduce
+@chainable foldl
+@chainable foldr
+@chainable accumulate
 
-@create_reverse_macro count
-@create_reverse_macro sum
-@create_reverse_macro prod
-@create_reverse_macro minimum
-@create_reverse_macro maximum
-@create_reverse_macro any
-@create_reverse_macro all
-@create_reverse_macro extrema
-@create_reverse_macro argmin
-@create_reverse_macro argmax
+@chainable count
+@chainable sum
+@chainable prod
+@chainable minimum
+@chainable maximum
+@chainable any
+@chainable all
+@chainable extrema
+@chainable argmin
+@chainable argmax
 
-@create_reverse_macro findfirst
-@create_reverse_macro findlast
+@chainable findfirst
+@chainable findlast
 
-@create_reverse_macro convert
-@create_reverse_macro parse
+@chainable convert
+@chainable parse
 
 # ----------------------------------------------------------------
 # Unzipping

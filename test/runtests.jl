@@ -6,6 +6,7 @@ Aqua.test_all(Chainables)
 # Run tests
 ###########################################################################
 
+include(joinpath(@__DIR__, "chainable.jl"))
 include(joinpath(@__DIR__, "apply.jl"))
 include(joinpath(@__DIR__, "pack.jl"))
 include(joinpath(@__DIR__, "functionals.jl"))
