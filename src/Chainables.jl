@@ -26,7 +26,7 @@ macro chainable(function_name)
     quote 
         macro $function_name(args...)
             f = $function_name
-            posargs, kwargs = get_posargs_kwargs(args)
+            posargs, kwargs = $get_posargs_kwargs(args)
             a = posargs[1]
             b = posargs[end]
             Expr(:call, f, b, a, kwargs...) |> esc

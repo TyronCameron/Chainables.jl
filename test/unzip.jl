@@ -14,6 +14,8 @@
         @all b -> b < 0
     end
 
+    @test all(unzip(z, 2) .== b)
+
 end
 
 

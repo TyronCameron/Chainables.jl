@@ -36,6 +36,7 @@
         @test λ(foo_Partial(1)(2))(3) == foo(1, 2, 3)
         @test apply(foo_Partial(1)(2), 3; kw = 10) == foo(1,2,3; kw = 10)
 
+        @test sprint(print, foo_Partial) == "@∂ (..) -> foo(..)"
         # foo_Partial = ~foo 
         # foo_some_Partial = foo~(1,@x,3)
 
